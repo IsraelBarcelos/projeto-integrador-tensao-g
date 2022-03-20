@@ -7,16 +7,13 @@ export function Samples() {
   const [material, setMaterial] = useState(
     Array(parseInt(params.layers)).fill(0)
   );
-  const [hits, setHits] = useState(Array(parseInt(params.layers)).fill(0));
+  const [hits, setHits] = useState(Array(parseInt(params.layers)).fill(1));
 
-  useEffect(() => {
-    console.log(material);
-  }, [material, hits]);
+  useEffect(() => {}, [material, hits]);
 
   return (
     <section>
       <Form>
-        <h1 className="form-title text-center">Tensçoes Geostáticas</h1>
         <fieldset>
           <Form.Group className="mx-2 mb-3">
             <table>
@@ -26,7 +23,7 @@ export function Samples() {
                     <b>Nível do lençol freático: </b>
                   </td>
                   <td>
-                    <div className="d-inline-block border border-dark text-center">
+                    <div className="mx-2 d-inline-block border border-dark text-center">
                       {params.level}
                     </div>
                   </td>
@@ -36,7 +33,7 @@ export function Samples() {
                     <b>Número de Camadas:&nbsp;</b>
                   </td>
                   <td>
-                    <div className="d-inline-block border border-dark text-center">
+                    <div className="mx-2 d-inline-block border border-dark text-center">
                       {params.layers}
                     </div>
                   </td>
@@ -62,11 +59,33 @@ export function Samples() {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
-                      <input type="number" className="form-control input-sm" />
+                      <Form.Group controlId="formBasicPassword">
+                        <Form.Control
+                          value={hits[index]}
+                          onChange={(hitsChanged) => {
+                            if (
+                              isNaN(parseInt(hitsChanged.target.value)) ||
+                              parseInt(hitsChanged.target.value) === 0
+                            ) {
+                              let newArray = [...hits];
+                              newArray[index] = parseInt(1);
+                              setHits([...newArray]);
+                              return;
+                            }
+                            let newArray = [...hits];
+                            newArray[index] = parseInt(
+                              hitsChanged.target.value
+                            );
+                            setHits([...newArray]);
+                          }}
+                          type="number"
+                        />
+                      </Form.Group>
                     </td>
                     <td>
-                      <select
+                      <Form.Select
                         value={material[index]}
+                        size="sm"
                         onChange={(materialSelected) => {
                           let newArray = [...material];
                           newArray[index] = parseInt(
@@ -74,13 +93,15 @@ export function Samples() {
                           );
                           setMaterial([...newArray]);
                         }}
-                        className="custom-select form-control"
+                        aria-label="Default select example"
                       >
-                        <option defaultValue>Escolher</option>
+                        <option style={{ display: "none" }} defaultValue>
+                          Escolher
+                        </option>
                         <option value="1">Solo tipo 1</option>
                         <option value="2">Solo tipo 2</option>
                         <option value="3">Solo tipo 3</option>
-                      </select>
+                      </Form.Select>
                     </td>
                   </tr>
                 );
@@ -88,16 +109,8 @@ export function Samples() {
             </tbody>
           </Table>
 
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(material);
-            }}
-          >
-            log
-          </button>
           <div className="text-center">
-            <Link to={`/amostras/`}>
+            <Link to={`/calculos/:`}>
               <Button variant="primary">Adicionar novos dados</Button>
             </Link>
           </div>

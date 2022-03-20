@@ -15,7 +15,6 @@ export function InsertScreen() {
   return (
     <section>
       <Form>
-        <h1 className="form-title text-center">Tensçoes Geostáticas</h1>
         <fieldset>
           <Form.Group className="mx-2 mb-3">
             <label>

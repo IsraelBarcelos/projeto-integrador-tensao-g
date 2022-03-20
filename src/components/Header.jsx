@@ -1,3 +1,7 @@
 export function Header() {
-  return <header> Esse é o header</header>;
+  return (
+    <header>
+      <h1 className="form-title text-center">Tensões Geostáticas</h1>
+    </header>
+  );
 }
