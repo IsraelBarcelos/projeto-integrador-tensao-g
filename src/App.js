@@ -15,7 +15,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<InsertScreen />} />
-            <Route path="/amostras/" element={<Samples />} />
+            <Route path="/amostras/:level/:layers" element={<Samples />} />
           </Routes>
         </BrowserRouter>
       </main>
